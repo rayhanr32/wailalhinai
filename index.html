@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wail Al Hinai</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap">
+<style>
+  /* Layout concept: a classic personal engineering portfolio. Photo hero, employer logo strip,
+     full experience list with logos, grouped skills, contact. Clean white with a deep teal accent. */
+  :root{
+    --bg:#FFFFFF; --band:#F7F4F1; --fg:#211B17; --fg-2:#5B524C; --fg-3:#958B84; --line:#ECE5DF;
+    --accent:#C8561F; --accent-2:#A44416; --accent-soft:#FCEBDF; --hero:#1C1916; --on-hero:#FAF6F2;
+    --head:"Montserrat",Arial,Helvetica,sans-serif; --body:"Open Sans",-apple-system,"Segoe UI",Arial,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+    --bg:#13110F; --band:#1B1815; --fg:#F2ECE6; --fg-2:#C2B7AE; --fg-3:#8A7F77; --line:#2C2621;
+    --accent:#F08A4E; --accent-2:#F5A774; --accent-soft:#3A2416; --hero:#0D0B0A; --on-hero:#FAF6F2; color-scheme:dark; } }
+  :root[data-theme="dark"]{
+    --bg:#13110F; --band:#1B1815; --fg:#F2ECE6; --fg-2:#C2B7AE; --fg-3:#8A7F77; --line:#2C2621;
+    --accent:#F08A4E; --accent-2:#F5A774; --accent-soft:#3A2416; --hero:#0D0B0A; --on-hero:#FAF6F2; color-scheme:dark; }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{ margin:0; background:var(--bg); color:var(--fg); font-family:var(--body); font-size:16px; line-height:1.65; }
+  h1,h2,h3,p{ margin:0; }
+  h1,h2,h3{ font-family:var(--head); text-wrap:balance; }
+  a{ color:inherit; }
+  :focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+  .wrap{ max-width:1140px; margin-inline:auto; padding-inline:clamp(16px,4vw,32px); }
+
+  header.top{ position:sticky; top:env(safe-area-inset-top,0px); z-index:20; background:var(--bg); border-bottom:1px solid var(--line); }
+  header.top .wrap{ display:flex; align-items:center; justify-content:space-between; gap:16px; min-height:68px; }
+  .brand{ font-family:var(--head); font-weight:800; font-size:20px; letter-spacing:.08em; text-transform:uppercase; text-decoration:none; }
+  .brand small{ display:block; font-weight:500; font-size:11px; letter-spacing:.16em; color:var(--fg-3); }
+  header nav{ display:flex; gap:clamp(14px,2.4vw,30px); }
+  header nav a{ font-family:var(--head); font-size:13.5px; font-weight:600; letter-spacing:.04em; text-decoration:none; color:var(--fg-2); padding-block:6px; border-bottom:2px solid transparent; }
+  header nav a:hover{ color:var(--accent); border-color:var(--accent); }
+  @media (max-width:780px){ header nav{ display:none; } }
+
+  .hero{ background:var(--hero); color:var(--on-hero); position:relative; overflow:hidden; }
+  .hero::before{ content:""; position:absolute; inset:0; background:
+      radial-gradient(ellipse 60% 80% at 85% 20%, rgba(200,86,31,.42), transparent 60%),
+      linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+    background-size:auto, 40px 40px, 40px 40px; pointer-events:none; }
+  .hero .wrap{ position:relative; display:grid; grid-template-columns:auto minmax(0,1fr); gap:clamp(28px,5vw,64px); align-items:center; padding-block:clamp(56px,9vw,110px); }
+  @media (max-width:760px){ .hero .wrap{ grid-template-columns:minmax(0,1fr); text-align:center; justify-items:center; } }
+  .avatar{ width:clamp(180px,22vw,250px); aspect-ratio:1; border-radius:50%; overflow:hidden; border:6px solid rgba(255,255,255,.12); box-shadow:0 20px 40px rgba(0,0,0,.35); }
+  .avatar.mg{ display:grid; place-items:center; background:linear-gradient(140deg,#C8561F,#E9925C); }
+  .avatar.mg span{ font-family:var(--head); font-weight:800; font-size:clamp(64px,8vw,92px); color:#fff; letter-spacing:-.02em; }
+  .avatar img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .hello{ font-family:var(--head); font-size:14px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:#F5B48A; }
+  .hero h1{ font-size:clamp(44px,7vw,80px); font-weight:800; line-height:1.02; margin-top:10px; letter-spacing:-.01em; }
+  .tagline{ font-family:var(--head); font-size:clamp(16px,1.8vw,20px); font-weight:500; color:#E2D6CC; margin-top:16px; }
+  .tagline span{ color:#F08A4E; margin-inline:8px; }
+  .hero .btns{ display:flex; flex-wrap:wrap; gap:12px; margin-top:30px; }
+  @media (max-width:760px){ .hero .btns{ justify-content:center; } }
+  .b{ font-family:var(--head); font-weight:700; font-size:14px; letter-spacing:.05em; text-transform:uppercase; text-decoration:none; padding:14px 26px; border-radius:4px; background:#C8561F; color:#fff; border:2px solid #C8561F; }
+  .b.o{ background:transparent; border-color:rgba(255,255,255,.5); }
+  .b:hover{ background:#fff; color:#1C1916; border-color:#fff; }
+
+  .logos{ background:var(--band); border-bottom:1px solid var(--line); }
+  .logos .wrap{ padding-block:28px; display:flex; flex-direction:column; align-items:center; gap:18px; }
+  .logos p{ font-family:var(--head); font-size:12px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--fg-3); }
+  .logo-row{ display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:14px clamp(22px,4vw,48px); }
+  .logo-row span{ display:grid; place-items:center; height:56px; padding:6px 10px; background:#fff; border-radius:6px; }
+  .logo-row img{ max-height:44px; max-width:130px; width:auto; height:auto; filter:grayscale(1); opacity:.75; transition:filter .25s, opacity .25s; }
+  .logo-row span:hover img{ filter:none; opacity:1; }
+
+  section{ padding-block:clamp(56px,8vw,96px); scroll-margin-top:72px; }
+  section.alt{ background:var(--band); }
+  .title{ text-align:center; margin-bottom:clamp(32px,5vw,52px); }
+  .title h2{ font-size:clamp(28px,3.6vw,40px); font-weight:800; letter-spacing:.01em; }
+  .title h2::after{ content:""; display:block; width:56px; height:4px; background:var(--accent); margin:16px auto 0; border-radius:2px; }
+  .title p{ color:var(--fg-2); margin-top:14px; }
+
+  .about{ display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,1fr); gap:clamp(28px,5vw,64px); align-items:start; }
+  @media (max-width:820px){ .about{ grid-template-columns:minmax(0,1fr); } }
+  .about p{ font-size:17px; color:var(--fg-2); }
+  .about p + p{ margin-top:16px; }
+  .about p.first{ font-size:19px; color:var(--fg); }
+  .facts{ background:var(--band); border-radius:8px; padding:26px 28px; border-left:4px solid var(--accent); }
+  section.alt .facts{ background:var(--bg); }
+  .facts dl{ margin:0; display:grid; gap:14px; }
+  .facts dt{ font-family:var(--head); font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--fg-3); }
+  .facts dd{ margin:2px 0 0; font-weight:600; }
+
+  .job{ display:grid; grid-template-columns:88px minmax(0,1fr); gap:clamp(16px,3vw,32px); padding-block:30px; border-top:1px solid var(--line); }
+  .job:first-of-type{ border-top:none; padding-top:0; }
+  @media (max-width:560px){ .job{ grid-template-columns:minmax(0,1fr); } }
+  .job .lg{ width:88px; height:88px; border-radius:8px; background:#fff; border:1px solid var(--line); display:grid; place-items:center; padding:10px; }
+  .job .lg img{ max-width:100%; max-height:100%; }
+  .job .when{ font-family:var(--head); font-size:13px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--accent); }
+  .job h3{ font-size:clamp(19px,2vw,23px); font-weight:700; margin-top:6px; line-height:1.3; }
+  .job .co{ font-weight:600; color:var(--fg-2); margin-top:2px; }
+  .job ul{ margin:14px 0 0; padding-left:20px; color:var(--fg-2); columns:2; column-gap:40px; }
+  @media (max-width:820px){ .job ul{ columns:1; } }
+  .job li{ margin-bottom:6px; break-inside:avoid; }
+  .job li::marker{ color:var(--accent); }
+
+  .edu{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
+  @media (max-width:900px){ .edu{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+  @media (max-width:540px){ .edu{ grid-template-columns:minmax(0,1fr); } }
+  .ecard{ background:var(--bg); border:1px solid var(--line); border-radius:8px; padding:22px 24px; border-top:4px solid var(--accent); }
+  .ecard .y{ font-family:var(--head); font-weight:800; font-size:26px; color:var(--accent); }
+  .ecard h3{ font-size:17px; font-weight:700; margin-top:6px; line-height:1.35; }
+  .ecard p{ color:var(--fg-2); font-size:14.5px; margin-top:6px; }
+
+  .skills{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(20px,3vw,36px); }
+  @media (max-width:900px){ .skills{ grid-template-columns:minmax(0,1fr); } }
+  .group h3{ font-size:14px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; padding-bottom:12px; border-bottom:2px solid var(--fg); margin-bottom:6px; }
+  .group ul{ list-style:none; margin:0; padding:0; }
+  .group li{ display:flex; justify-content:space-between; gap:12px; padding:11px 0; border-bottom:1px solid var(--line); }
+  .group li .lvl{ font-family:var(--head); font-size:11.5px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--accent); background:var(--accent-soft); padding:3px 9px; border-radius:3px; align-self:center; white-space:nowrap; }
+
+  .interests{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(20px,3vw,36px); }
+  @media (max-width:760px){ .interests{ grid-template-columns:minmax(0,1fr); } }
+  .tags{ display:flex; flex-wrap:wrap; gap:10px; margin-top:16px; }
+  .tags span{ font-family:var(--head); font-weight:600; font-size:14px; padding:9px 16px; border:1.5px solid var(--line); border-radius:999px; background:var(--bg); }
+
+  .logo-row .tx{ font-family:var(--head); font-weight:700; font-size:clamp(15px,1.6vw,19px); color:var(--fg-2); background:transparent; height:auto; padding:6px 4px; }
+  .proj{ display:inline-block; margin-left:8px; font-family:var(--head); font-size:11.5px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--accent); background:var(--accent-soft); padding:3px 9px; border-radius:4px; vertical-align:2px; }
+  .job .lg.ini{ font-family:var(--head); font-weight:800; font-size:24px; color:var(--accent); background:var(--accent-soft); border-color:transparent; }
+  .projects{ background:var(--hero); color:var(--on-hero); }
+  .projects .wrap{ padding-block:30px; display:flex; flex-direction:column; align-items:center; gap:16px; }
+  .projects p{ font-family:var(--head); font-size:12px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:#F5B48A; }
+  .proj-row{ display:flex; flex-wrap:wrap; justify-content:center; gap:10px; }
+  .proj-row span{ font-family:var(--head); font-weight:700; font-size:clamp(14px,1.5vw,17px); padding:10px 18px; border-radius:999px; border:1.5px solid rgba(255,255,255,.18); background:rgba(255,255,255,.05); }
+  .projline{ display:inline-flex; align-items:center; gap:10px; margin-top:8px; font-family:var(--head); font-weight:700; font-size:14.5px; color:var(--accent); background:var(--accent-soft); padding:6px 12px; border-radius:6px; }
+  .projline span{ font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--fg-2); }
+  .contact{ text-align:center; }
+  .contact .lead{ font-size:19px; color:var(--fg-2); }
+  .cgrid{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; margin-top:34px; text-align:left; }
+  @media (max-width:820px){ .cgrid{ grid-template-columns:minmax(0,1fr); } }
+  .ci{ border:1px solid var(--line); border-radius:8px; padding:22px 24px; display:flex; flex-direction:column; gap:8px; min-width:0; }
+  .ci small{ font-family:var(--head); font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--fg-3); }
+  .ci b{ font-size:18px; overflow-wrap:anywhere; user-select:all; }
+  .copy{ align-self:flex-start; font-family:var(--head); font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; padding:8px 14px; border-radius:4px; border:1.5px solid var(--accent); background:transparent; color:var(--accent); cursor:pointer; margin-top:4px; }
+  .copy:hover{ background:var(--accent); color:#fff; }
+  footer{ background:var(--hero); color:#B5A99F; font-size:14px; }
+  footer .wrap{ display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px; padding-block:26px; }
+</style>
+</head>
+<body><header class="top"><div class="wrap">
+  <a class="brand" href="#home">Wail Al Hinai<small>Supervisor</small></a>
+  <nav aria-label="Main"><a href="#home">Home</a><a href="#about">About</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#contact">Contact</a></nav>
+</div></header>
+
+<div class="hero" id="home"><div class="wrap">
+  <div class="avatar mg" aria-hidden="true"><span>WH</span></div>
+  <div>
+    <p class="hello">Hello, I'm</p>
+    <h1>Wail Al Hinai</h1>
+    <p class="tagline">Supervisor<span>|</span>Call Centre &amp; Sales<span>|</span>FinTech &amp; WiFi</p>
+    <div class="btns"><a class="b" href="#experience">My Experience</a><a class="b o" href="#contact">Contact Me</a></div>
+  </div>
+</div></div>
+
+<div class="logos"><div class="wrap">
+  <p>Where I've worked</p>
+  <div class="logo-row"><span class="tx">Vodafone</span><span class="tx">Omni Digital Experience</span><span class="tx">Al Safa</span><span class="tx">Al Khazain</span><span class="tx">Gulf Energy</span><span class="tx">Mechanical Turki</span></div>
+</div></div>
+<div class="projects"><div class="wrap">
+  <p>Projects I've worked on</p>
+  <div class="proj-row"><span>Vodafone</span><span>Friendi Pay</span><span>Awasr</span><span>beIN Media Group</span><span>Ooredoo</span><span>Omasco Honda</span></div>
+</div></div>
+
+<main>
+  <section id="about"><div class="wrap">
+    <div class="title"><h2>About Me</h2></div>
+    <div class="about">
+      <div>
+        <p class="first">Results-driven Service Supervisor with over 12 years of diverse professional experience spanning call centre operations, FinTech services, ISP customer support, direct sales, and oil &amp; gas field operations.</p>
+        <p>Proven track record of leading high-performing teams, exceeding KPI and sales targets, and delivering exceptional customer service in fast-paced environments. Adept at coaching agents, managing client relationships, handling escalations, and driving process improvements.</p>
+        <p>Currently supervising a direct sales team at Vodafone, with a strong background in Cisco and Genesys platforms and digital and financial services.</p>
+      </div>
+      <div class="facts"><dl>
+        <div><dt>Current role</dt><dd>Supervisor, Vodafone Sales</dd></div>
+        <div><dt>Experience</dt><dd>12+ years</dd></div>
+        <div><dt>Platforms</dt><dd>Cisco &amp; Genesys</dd></div>
+        <div><dt>Location</dt><dd>Al Amrat, Bawshar</dd></div>
+      </dl></div>
+    </div>
+  </div></section>
+
+  <section id="experience" class="alt"><div class="wrap">
+    <div class="title"><h2>Professional Experience</h2></div>
+    <article class="job"><div class="lg ini">VF</div><div>
+      <p class="when">Jul 2026 – Present</p>
+      <h3>Supervisor</h3>
+      <p class="co">Vodafone</p>
+      <p class="projline"><span>Project</span>Vodafone Sales</p>
+      <ul>
+        <li>Supervise and coach a team of sales representatives across retail and direct sales channels to consistently achieve monthly and quarterly sales targets.</li>
+        <li>Monitor daily sales performance, conversion rates, and individual KPIs, providing on-the-spot coaching and support to underperforming agents.</li>
+        <li>Handle escalated customer and sales issues, ensuring quick and satisfactory resolution in line with company policy.</li>
+        <li>Plan and organize sales activities, roadshows, and promotional campaigns to increase brand visibility and drive new customer acquisition.</li>
+        <li>Prepare and present daily, weekly, and monthly sales performance reports to management, highlighting trends and areas for improvement.</li>
+        <li>Ensure the sales team follows Vodafone's policies, pricing, and compliance procedures, including accurate SIM registration and documentation.</li>
+      </ul></div></article>
+    <article class="job"><div class="lg ini">OD</div><div>
+      <p class="when">Apr 2026 – Jul 2026</p>
+      <h3>Service Supervisor</h3>
+      <p class="co">Omni Digital Experience</p>
+      <p class="projline"><span>Project</span>Friendi Pay</p>
+      <ul>
+        <li>Oversaw day-to-day supervisor operations of a call centre team supporting Friendi Pay's digital wallet and mobile financial services.</li>
+        <li>Monitored and managed team KPIs including transaction query resolution rate, first contact resolution (FCR), average handling time (AHT), and customer satisfaction (CSAT).</li>
+        <li>Handled escalations related to payment failures, wallet top-ups, transfers, and merchant issues, ensuring swift resolution in line with FinTech compliance standards.</li>
+        <li>Ensured agents maintained accurate knowledge of digital payment products, regulatory requirements, and fraud-awareness protocols.</li>
+        <li>Coordinated with the compliance, fraud, and technical teams to address operational risks and improve process workflows.</li>
+        <li>Prepared daily, weekly, and monthly performance dashboards for management and the client.</li>
+        <li>Drove team engagement and productivity through regular briefings, coaching sessions, and incentive tracking.</li>
+      </ul></div></article>
+    <article class="job"><div class="lg ini">OD</div><div>
+      <p class="when">Apr 2024 – Apr 2026</p>
+      <h3>Service Supervisor</h3>
+      <p class="co">Omni Digital Experience</p>
+      <p class="projline"><span>Project</span>Awasr</p>
+      <ul>
+        <li>Supervised and coached a team of call center agents delivering internet &amp; broadband support for Awasr (ISP), ensuring consistent service quality and SLA compliance.</li>
+        <li>Monitored real-time dashboards and team KPIs (AHT, FCR, CSAT, NPS) and implemented corrective action plans to drive continuous performance improvement.</li>
+        <li>Acted as the primary point of escalation for complex technical and customer service issues, coordinating with technical teams for timely resolution.</li>
+        <li>Organized and led regular client review meetings, preparing performance reports and sharing team updates with stakeholders.</li>
+        <li>Managed monthly agent performance appraisals, submitted reports to management, and liaised with HR on attendance and scheduling.</li>
+        <li>Ensured full adherence to company policies, processes, and quality standards across the team.</li>
+        <li>Prepared daily, weekly, and monthly performance dashboards for management and the client.</li>
+        <li>Coached and mentored underperforming agents through structured development plans and on-floor support.</li>
+      </ul></div></article>
+    <article class="job"><div class="lg ini">OD</div><div>
+      <p class="when">Oct 2021 – Apr 2024</p>
+      <h3>Team Leader</h3>
+      <p class="co">Omni Digital Experience</p>
+      <p class="projline"><span>Projects</span>beIN Media Group · Ooredoo · Omasco Honda</p>
+      <ul>
+        <li>Supervised and coached call center agents to maintain high performance and service quality across multiple client accounts.</li>
+        <li>Scheduled team shifts, tracked KPIs, and ensured strict adherence to company policies and processes.</li>
+        <li>Managed customer escalations and ensured timely and satisfactory resolution.</li>
+      </ul></div></article>
+    <article class="job"><div class="lg ini">OD</div><div>
+      <p class="when">Jun 2020 – Oct 2021</p>
+      <h3>Front Office Agent</h3>
+      <p class="co">Omni Digital Experience</p>
+      <p class="projline"><span>Project</span>beIN Media Group</p>
+      <ul>
+        <li>Handled inbound and outbound tele-marketing and customer service calls for beIN Media Group subscribers.</li>
+      </ul></div></article>
+    <article class="job"><div class="lg ini">AS</div><div>
+      <p class="when">Jan 2019 – Jan 2020</p>
+      <h3>Assistant Operator</h3>
+      <p class="co">Al Safa, Abari</p>
+      <ul>
+        <li>Assisted in well testing operations by managing equipment, valves, and flow lines on the rig floor.</li>
+        <li>Monitored well testing procedures to ensure accurate data collection and safe operations.</li>
+        <li>Adhered to HSE standards and reported hazards promptly to maintain a safe working environment.</li>
+      </ul></div></article>
+    <article class="job"><div class="lg ini">AK</div><div>
+      <p class="when">Jan 2017 – Dec 2018</p>
+      <h3>Floorman</h3>
+      <p class="co">Al Khazain (Mukhizna)</p>
+      <ul>
+        <li>Assisted in drilling operations handling drill pipes, tools, and rig floor equipment.</li>
+        <li>Supported rig crew with maintenance, rig up/down activities, and general floor operations.</li>
+        <li>Ensured compliance with safety procedures and correct use of PPE.</li>
+      </ul></div></article>
+    <article class="job"><div class="lg ini">GE</div><div>
+      <p class="when">Jun 2015 – Jan 2017</p>
+      <h3>Roustabout</h3>
+      <p class="co">Gulf Energy (Mukhizna)</p>
+      <ul>
+        <li>Performed maintenance and housekeeping duties on the rig.</li>
+        <li>Assisted with rig operations, equipment handling, and site preparation.</li>
+      </ul></div></article>
+    <article class="job"><div class="lg ini">MT</div><div>
+      <p class="when">Mar 2012 – Nov 2014</p>
+      <h3>Maintenance Technician</h3>
+      <p class="co">Mechanical Turki (Nimr, Al Wasta)</p>
+      <ul>
+        <li>Carried out general mechanical maintenance on field vehicles and equipment.</li>
+        <li>Performed routine vehicle services (oil &amp; filter changes) and replaced faulty components including compressors and pumps.</li>
+      </ul></div></article>
+  </div></section>
+
+  <section id="skills"><div class="wrap">
+    <div class="title"><h2>Skills</h2></div>
+    <div class="skills">
+      <div class="group"><h3>Leadership &amp; Operations</h3><ul>
+        <li>Team Leadership &amp; Agent Coaching</li><li>Call Centre Operations Management</li><li>Project Management</li><li>Customer Escalation Handling</li><li>Performance Appraisal &amp; Reporting</li><li>Workforce Scheduling &amp; Planning</li><li>SLA &amp; Quality Compliance</li></ul></div>
+      <div class="group"><h3>Tools &amp; Other</h3><ul>
+        <li>Cisco &amp; Genesys Platforms</li><li>FinTech &amp; Digital Payments</li><li>Client Relationship Management</li><li>MS Office (Excel, PowerPoint)</li><li>Marketing &amp; Tele-sales</li><li>Rig Floor &amp; HSE Safety Procedures</li><li>Time Management</li><li>Effective Communication</li></ul></div>
+      <div class="group"><h3>Languages</h3><ul>
+        <li>Arabic <span class="lvl">Native</span></li><li>English <span class="lvl">Fluent</span></li></ul>
+        <h3 style="margin-top:30px">Education</h3><ul>
+        <li>Level 2 Diploma, Performing Engineering Operations <span class="lvl">Mar 2013</span></li>
+        <li>General Higher Diploma, Ahmed Bin Said High School <span class="lvl">2011–2012</span></li></ul></div>
+    </div>
+  </div></section>
+
+  <section id="contact" class="alt contact"><div class="wrap">
+    <div class="title"><h2>Get In Touch</h2></div>
+    <p class="lead">Please feel free to reach out!</p>
+    <div class="cgrid">
+      <div class="ci"><small>Mobile</small><b>+968 9445 8151</b><button class="copy" type="button" data-copy="+968 9445 8151">Copy</button></div>
+      <div class="ci"><small>Mobile (2)</small><b>+968 9989 9468</b><button class="copy" type="button" data-copy="+968 9989 9468">Copy</button></div>
+      <div class="ci"><small>Email</small><b>Wail330@outlook.com</b><button class="copy" type="button" data-copy="Wail330@outlook.com">Copy</button></div>
+    </div>
+    <p class="lead" style="margin-top:22px;font-size:15px">Al Amrat, Bawshar · LinkedIn: @Wail tamim</p>
+  </div></section>
+</main>
+<footer><div class="wrap"><span>© 2026 Wail Al Hinai</span><span>Supervisor · Call Centre &amp; Sales</span></div></footer>
+<script>
+document.querySelectorAll('.copy').forEach(function(b){
+  b.addEventListener('click',function(){
+    var v=b.getAttribute('data-copy'), t=b.previousElementSibling;
+    function done(s){ b.textContent=s; setTimeout(function(){ b.textContent='Copy'; },1500); }
+    function sel(){ var r=document.createRange(); r.selectNodeContents(t); var s=getSelection(); s.removeAllRanges(); s.addRange(r); done('Selected'); }
+    try{ navigator.clipboard.writeText(v).then(function(){ done('Copied'); },sel); }catch(e){ sel(); }
+  });
+});
+</script>
+
+</body>
+</html>
